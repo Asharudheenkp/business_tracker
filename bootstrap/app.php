@@ -1,8 +1,11 @@
 <?php
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -26,5 +29,17 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->renderable(function (AuthenticationException $e) {
+            $guard = Arr::get($e->guards(), '0');
+            switch ($guard) {
+                case 'admin' :
+                    $login = 'admin.login';
+                    break;
+
+                default:
+                    $login = 'login';
+                    break;
+            }
+            return redirect()->guest(route($login));
+        });
     })->create();
