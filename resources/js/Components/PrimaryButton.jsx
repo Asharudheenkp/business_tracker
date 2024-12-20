@@ -7,11 +7,9 @@ export default function PrimaryButton({
     return (
         <button
             {...props}
-            className={
-                `inline-flex items-center rounded-md px-6 py-2 text-white bg-[#F9A826] border-2 border-[#D84A05] shadow-md hover:bg-[#D84A05] hover:border-[#4F2E14] hover:shadow-lg transition-all duration-300 ${
-                    disabled && "opacity-25"
-                } ` + className
-            }
+            className={`inline-flex items-center rounded-md px-6 py-2 text-secondary bg-primary border-2 border-accent shadow-md hover:bg-accent hover:border-accent hover:shadow-lg transition-all duration-300 ${
+                disabled ? "opacity-25 cursor-not-allowed" : ""
+            } ${className}`}
             disabled={disabled}
         >
             {children}

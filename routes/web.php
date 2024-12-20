@@ -14,6 +14,14 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::get('/products', function () {
+    return Inertia::render('Products');
+})->name('products');
+
+Route::get('/product/{slug}', function () {
+    return Inertia::render('ProductsDetails');
+})->name('product.details');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -24,4 +32,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
